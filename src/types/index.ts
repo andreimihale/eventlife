@@ -168,12 +168,17 @@ export type CollectionProps = {
   emptyTitle: string;
   emptyStateSubtext: string;
   collectionType?: "Events_Organized" | "My_Tickets" | "All_Events";
-  limit: number;
-  page: number | string;
-  totalPages?: number;
+  page: number;
+  totalPages: number;
   urlParamName?: string;
 };
 
 export type UpdateEventProps = {
   params: { id: string };
+};
+
+export type PaginationProps = {
+  urlParamName?: string;
+  page: number;
+  totalPages: number;
 };

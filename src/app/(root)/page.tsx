@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const Home = async ({ searchParams }: SearchParamProps) => {
-  const page = Number(searchParams?.pag) || 1;
+  const page = Number(searchParams?.page) || 1;
   const searchText = (searchParams?.query as string) || "";
   const category = (searchParams?.category as string) || "";
 
@@ -61,9 +61,8 @@ const Home = async ({ searchParams }: SearchParamProps) => {
           emptyTitle="No Events Found"
           emptyStateSubtext="Come back later"
           collectionType="All_Events"
-          limit={6}
-          page={1}
-          totalPages={2}
+          page={page}
+          totalPages={events?.totalPages || 1}
         />
       </section>
     </>

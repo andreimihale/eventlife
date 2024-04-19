@@ -1,12 +1,12 @@
 import { CollectionProps } from "@/types";
 import Card from "./Card";
+import Pagination from "./Pagination";
 
 const Collection = ({
   data,
   emptyTitle,
   emptyStateSubtext,
   collectionType,
-  limit,
   page,
   totalPages,
   urlParamName,
@@ -31,6 +31,13 @@ const Collection = ({
               );
             })}
           </ul>
+          {totalPages > 1 && (
+            <Pagination
+              urlParamName={urlParamName}
+              page={page}
+              totalPages={totalPages}
+            />
+          )}
         </div>
       ) : (
         <div className="flex-center wrapper bg-grey-50 min-h-[200px] w-full flex-col gap-3 rounded-[14px] py-28 text-center">
