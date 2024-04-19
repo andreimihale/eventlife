@@ -1,6 +1,8 @@
 import Collection from "@/components/shared/Collection";
 import { Button } from "@/components/ui/button";
 import { getEventsByUser } from "@/lib/actions/event.actions";
+import { getOrdersByUser } from "@/lib/actions/order.actions";
+import { IOrder } from "@/lib/database/models/order.model";
 import { SearchParamProps } from "@/types";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
@@ -13,11 +15,12 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
   const ordersPage = Number(searchParams?.ordersPage) || 1;
   const eventsPage = Number(searchParams?.eventsPage) || 1;
 
-  //    const orders = await getOrdersByUser({ userId, page: ordersPage });
+  const orders = await getOrdersByUser({ userId, page: ordersPage });
 
-  //    const orderedEvents = orders?.data.map((order: IOrder) => order.event) || [];
+  const orderedEvents = orders?.data.map((order: IOrder) => order.event) || [];
 
   const userEvents = await getEventsByUser({ userId, page: eventsPage });
+
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
@@ -29,7 +32,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
         </div>
       </section>
 
-      {/* <section className="wrapper my-8">
+      <section className="wrapper my-8">
         <Collection
           data={orderedEvents}
           emptyTitle="No event tickets purchased yet"
@@ -40,7 +43,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
           urlParamName="ordersPage"
           totalPages={orders?.totalPages}
         />
-      </section> */}
+      </section>
 
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
         <div className="wrapper flex items-center justify-center sm:justify-between">
@@ -58,8 +61,8 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
           emptyStateSubtext="Go create some now"
           collectionType="Events_Organized"
           limit={6}
-          page={1}
-          totalPages={2}
+          page={eventsPage}
+          totalPages={userEvents?.totalPages}
           urlParamName="eventsPage"
         />
       </section>
